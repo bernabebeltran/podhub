@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pod Hub · Catálogo</title>
+<meta name="description" content="Catálogo Pod Hub · Pods y vapes en Corrientes y el Litoral. Envíos a todo Corrientes desde $1.000.">
+<meta name="theme-color" content="#07070a">
+<link rel="icon" href="img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   CONFIGURACIÓN RÁPIDA — cambiá solo esto
+   (el resto de la configuración está en el <script> de abajo)
+   ========================================================= */
+:root{
+  --bg:#07070a; --card:#121218; --card2:#191922; --line:#262633;
+  --text:#f4f2ff; --muted:#a59fc4;
+  --violet:#a855f7; --cyan:#22d3ee;
+  --grad:linear-gradient(90deg,var(--violet),var(--cyan));
+  --wa:#25d366;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Poppins,system-ui,sans-serif;line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+
+/* fondo de humo */
+.smoke{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.smoke span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.35;animation:drift 18s ease-in-out infinite alternate}
+.smoke span:nth-child(1){width:55vw;height:55vw;left:-15vw;top:5vh;background:#6d28d9}
+.smoke span:nth-child(2){width:50vw;height:50vw;right:-15vw;top:30vh;background:#0e7490;animation-duration:22s}
+.smoke span:nth-child(3){width:40vw;height:40vw;left:25vw;top:70vh;background:#4c1d95;animation-duration:26s}
+@keyframes drift{to{transform:translate(6vw,-8vh) scale(1.15)}}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(7,7,10,.78);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:22px;letter-spacing:-.5px}
+.brand img{width:38px;height:38px;border-radius:50%}
+.hub{background:var(--grad);color:#07070a;padding:0 7px;border-radius:7px;margin-left:2px}
+nav{display:flex;gap:18px;font-size:14px;color:var(--muted)}
+nav a:hover{color:var(--text)}
+@media(max-width:640px){nav{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font:inherit;font-weight:700;border-radius:999px;padding:12px 22px;transition:transform .15s,box-shadow .15s}
+.btn:active{transform:scale(.97)}
+.btn-wa{background:var(--wa);color:#06260f}
+.btn-wa:hover{box-shadow:0 0 24px rgba(37,211,102,.45)}
+.btn-grad{background:var(--grad);color:#07070a}
+.btn-grad:hover{box-shadow:0 0 26px rgba(168,85,247,.5)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn-sm{padding:8px 14px;font-size:14px}
+.wa-ico{width:18px;height:18px;fill:currentColor}
+
+/* hero */
+.hero{padding:56px 0 28px;text-align:center}
+.hero-logo{width:min(240px,60vw);margin:0 auto 22px;border-radius:50%;box-shadow:0 0 60px rgba(168,85,247,.45),0 0 120px rgba(34,211,238,.18);animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.hero h1{font-size:clamp(30px,6vw,52px);font-weight:900;line-height:1.1;letter-spacing:-1px}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);margin:12px auto 24px;max-width:520px}
+.hero .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.pill{font-size:13px;color:var(--muted);border:1px solid var(--line);background:rgba(18,18,24,.7);padding:6px 12px;border-radius:999px}
+
+/* secciones */
+section{padding:44px 0}
+.sec-title{font-size:clamp(24px,4vw,32px);font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+.sec-sub{color:var(--muted);margin-bottom:24px}
+
+/* filtros */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:7px 14px;font:inherit;font-size:14px;cursor:pointer}
+.chip.on{background:var(--grad);color:#07070a;border-color:transparent;font-weight:700}
+
+/* productos */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+.card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,border-color .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);border-color:#3b2a5c;box-shadow:0 10px 40px rgba(168,85,247,.15)}
+.pic{position:relative;aspect-ratio:4/3;display:grid;place-items:center;background:radial-gradient(circle at 50% 60%,rgba(168,85,247,.25),transparent 60%),#0b0b10;overflow:hidden}
+.pic img{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:contain;padding:50px 28px 18px;filter:drop-shadow(0 14px 22px rgba(0,0,0,.6)) drop-shadow(0 0 18px rgba(168,85,247,.35));animation:bob 4.5s ease-in-out infinite}
+.card:nth-child(2n) .pic img{animation-delay:-2.2s}
+@keyframes bob{50%{transform:translateY(-9px) rotate(-1.5deg)}}
+.pic::before,.pic::after{content:"";position:absolute;width:70%;height:55%;border-radius:50%;filter:blur(34px);opacity:.45;animation:puff 7s ease-in-out infinite alternate}
+.pic::before{left:-10%;bottom:-8%;background:#7c3aed}
+.pic::after{right:-12%;top:-6%;background:#0891b2;animation-duration:9s}
+@keyframes puff{to{transform:translate(14%,-10%) scale(1.25);opacity:.7}}
+@media (prefers-reduced-motion:reduce){.pic img,.pic::before,.pic::after,.hero-logo,.smoke span{animation:none}}
+.pic svg{height:82%}
+.badge{position:absolute;z-index:2;top:12px;left:12px;font-size:12px;font-weight:800;background:var(--grad);color:#07070a;padding:4px 10px;border-radius:999px}
+.badge.alt{left:auto;right:12px;background:#ffffff14;color:var(--text);border:1px solid #ffffff22;backdrop-filter:blur(4px)}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:12px;flex:1}
+.brandname{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);font-weight:700}
+.name{font-size:20px;font-weight:800;line-height:1.2}
+.feats{display:flex;gap:6px;flex-wrap:wrap}
+.feat{font-size:12px;color:var(--muted);background:#ffffff0a;border:1px solid var(--line);padding:3px 9px;border-radius:999px}
+.flab{font-size:13px;color:var(--muted)}
+.flavors{display:flex;flex-wrap:wrap;gap:6px}
+.fl{font:inherit;font-size:13px;cursor:pointer;border:1px solid var(--line);background:#0d0d13;color:var(--text);padding:6px 11px;border-radius:10px;transition:.15s}
+.fl:hover{border-color:var(--violet)}
+.fl.sel{border-color:transparent;background:var(--grad);color:#07070a;font-weight:700}
+.fl.out{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+.soldout .pic img{filter:grayscale(.85) brightness(.7)}
+.soldout .badge.alt{background:#f43f5e;color:#fff;border-color:transparent}
+.cover{width:min(420px,100%);margin:0 auto 26px;border-radius:20px;border:1px solid var(--line);box-shadow:0 0 50px rgba(168,85,247,.25)}
+.price{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}
+.price b{font-size:18px}
+.price small{display:block;color:var(--muted);font-size:12px}
+
+/* info cards */
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}
+.box h3{font-size:19px;margin-bottom:10px;display:flex;gap:10px;align-items:center}
+.box ul{list-style:none;display:grid;gap:8px;color:var(--muted)}
+.box li b{color:var(--text)}
+.box .btn{margin-top:16px}
+.mayor{background:linear-gradient(135deg,rgba(168,85,247,.22),rgba(34,211,238,.14)),var(--card);border-color:#4c2f7a}
+.ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--grad);color:#07070a;font-size:19px;flex:none}
+
+/* grupo */
+.group{text-align:center;background:radial-gradient(circle at 50% 0,rgba(168,85,247,.3),transparent 70%),var(--card);border:1px solid var(--line);border-radius:24px;padding:36px 20px}
+.group p{color:var(--muted);margin:8px auto 20px;max-width:460px}
+
+footer{border-top:1px solid var(--line);padding:26px 0 90px;color:var(--muted);font-size:13px;text-align:center}
+
+/* botón flotante */
+.fab{position:fixed;right:16px;bottom:16px;z-index:30;width:58px;height:58px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.fab svg{width:30px;height:30px;fill:#fff}
+
+/* aviso +18 */
+.gate{position:fixed;inset:0;z-index:50;background:rgba(5,5,8,.94);backdrop-filter:blur(8px);display:grid;place-items:center;padding:16px}
+.gate .in{max-width:380px;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:30px 24px}
+.gate img{width:110px;margin:0 auto 14px;border-radius:50%}
+.gate h2{font-size:24px;margin-bottom:6px}
+.gate p{color:var(--muted);font-size:14px;margin-bottom:20px}
+.gate .row{display:flex;gap:10px;justify-content:center}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="smoke"><span></span><span></span><span></span></div>
+
+<!-- Aviso +18 -->
+<div class="gate hidden" id="gate">
+  <div class="in">
+    <img src="img/logo.jpg" alt="Pod Hub">
+    <h2>¿Sos mayor de 18?</h2>
+    <p>Este catálogo es solo para mayores de edad.</p>
+    <div class="row">
+      <button class="btn btn-grad" id="gate-yes" onclick="document.getElementById('gate').classList.add('hidden')">Sí, soy +18</button>
+      <button class="btn btn-ghost" id="gate-no">No</button>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <a href="#" class="brand"><img src="img/icon.png" alt="">Pod<span class="hub">Hub</span></a>
+    <nav><a href="#catalogo">Catálogo</a><a href="#envios">Envíos</a><a href="#mayoristas">Mayoristas</a><a href="#grupo">Grupo</a></nav>
+    <a class="btn btn-wa btn-sm" data-wa="Hola Pod Hub! Quiero hacer una consulta 💨" target="_blank" rel="noopener"><svg class="wa-ico" viewBox="0 0 24 24"><use href="#wa"/></svg>Pedir</a>
+  </div>
+</header>
+
+<main>
+  <div class="hero wrap">
+    <img class="hero-logo" src="img/logo.jpg" alt="Pod Hub">
+    <h1>Tu pod, <span class="grad-text">al toque</span></h1>
+    <p>Pods y vapes originales en Corrientes y el Litoral. Elegí modelo y sabor, y pedilo por WhatsApp.</p>
+    <div class="ctas">
+      <a href="#catalogo" class="btn btn-grad">Ver catálogo</a>
+      <a class="btn btn-wa" data-wa="Hola Pod Hub! Quiero hacer un pedido 💨" target="_blank" rel="noopener"><svg class="wa-ico" viewBox="0 0 24 24"><use href="#wa"/></svg>Pedir por WhatsApp</a>
+    </div>
+    <div class="pills"><span class="pill">🛵 Envíos desde $1.000</span><span class="pill">📍 Todo Corrientes</span><span class="pill">📦 Mayoristas</span></div>
+  </div>
+
+  <section id="catalogo">
+    <div class="wrap">
+      <h2 class="sec-title">Catálogo</h2>
+      <p class="sec-sub">Tocá un sabor para elegirlo y pedilo por WhatsApp. Stock limitado por sabor.</p>
+      <img class="cover" src="img/lista-actualizada.jpg" alt="Lista de precios actualizada · Pod Hub">
+      <div class="filters" id="filters"></div>
+      <div class="grid" id="grid"></div>
+      <noscript><p class="sec-sub">Para ver el catálogo abrí este link en Chrome o Safari. También podés pedir directo por WhatsApp al 3794 320850.</p></noscript>
+    </div>
+  </section>
+
+  <section id="envios">
+    <div class="wrap info">
+      <div class="box">
+        <h3><span class="ico">🛵</span>Envíos</h3>
+        <ul>
+          <li><b>Todo Corrientes:</b> Capital y alrededores</li>
+          <li>Costo de envío <b>desde $1.000</b></li>
+          <li>💳 Consultá métodos de pago</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3><span class="ico">🚚</span>Otras provincias</h3>
+        <ul>
+          <li>También enviamos al resto del país.</li>
+          <li>Se coordina <b>por WhatsApp</b> con anticipación.</li>
+        </ul>
+        <a class="btn btn-ghost btn-sm" data-wa="Hola Pod Hub! Quiero consultar un envío a otra provincia 🚚" target="_blank" rel="noopener">Coordinar envío</a>
+      </div>
+      <div class="box mayor" id="mayoristas">
+        <h3><span class="ico">📦</span>Compras mayoristas</h3>
+        <ul>
+          <li>¿Revendés o querés comprar por cantidad?</li>
+          <li>Tenemos <b>precios especiales por mayor</b>.</li>
+        </ul>
+        <a class="btn btn-grad btn-sm" data-wa="Hola Pod Hub! Quiero consultar precios mayoristas 📦" target="_blank" rel="noopener">Consultar precio mayorista</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="grupo">
+    <div class="wrap">
+      <div class="group">
+        <h2 class="sec-title">Sumate al grupo <span class="grad-text">Pod Hub</span></h2>
+        <p>Stock del día, sabores nuevos y promos que no publicamos en otro lado.</p>
+        <a class="btn btn-grad" id="group-btn" target="_blank" rel="noopener">Unirme al grupo de WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Pod Hub · Corrientes y el Litoral · Venta exclusiva a mayores de 18 años</div>
+</footer>
+
+<a class="fab" data-wa="Hola Pod Hub! Quiero hacer una consulta 💨" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><use href="#wa"/></svg></a>
+
+<svg width="0" height="0" style="position:absolute"><symbol id="wa" viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-.9 1.2-.3.2-.6.1a8.2 8.2 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.5 13.5 0 0 0 5.2 4.6c1.9.8 2.7.9 3.6.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.1-.3-.2-.6-.3zM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4A9.8 9.8 0 1 1 12 21.8zm8.4-18.2A11.8 11.8 0 0 0 1.8 17.8L.1 24l6.4-1.7a11.8 11.8 0 0 0 5.6 1.4A11.8 11.8 0 0 0 20.4 3.6z"/></symbol></svg>
+
+<script>
+/* =========================================================
+   CONFIGURACIÓN — editá esto para actualizar el catálogo
+   ========================================================= */
+const CONFIG = {
+  // Número de WhatsApp para pedidos: código de país + área + número, sin "+", espacios ni guiones.
+  // Ejemplo Corrientes: 5493794123456
+  whatsapp: "5493794320850",
+  // Link de invitación del grupo (chat.whatsapp.com/...). Si queda vacío, el botón pide por WhatsApp que los sumen.
+  grupo: "https://chat.whatsapp.com/CT1dWxbDujm4lZDgJfCT2M",
+};
+
+/* PRODUCTOS
+   - precio: "" muestra "Consultar". Para poner precio: precio: "$23.000"
+   - img: "" usa el dibujo. Para foto real: guardala en la carpeta img y poné img: "img/nombre.jpg"
+   - Para marcar un sabor sin stock, agregale " (agotado)" al final. Ej: "Black Mint (agotado)"
+   - color: tono del dibujo del pod */
+const PRODUCTOS = [
+  {
+    marca: "ELF BAR", modelo: "ICE KING 40K", puffs: "40.000 puffs",
+    feats: ["Nivel de hielo regulable", "Pantalla", "Recargable"], color: ["#a855f7", "#22d3ee"], precio: "$25.000", img: "img/elfbar-ice-king.webp",
+    sabores: ["🍹 Baja Splash", "🍍 Cranberry Pineapple Juice", "🍏❄️ Sour Apple Ice", "🍇❄️ Grape Ice", "🍑 Peach", "🍉🍓 Tigers Blood", "🍉❄️ Watermelon Ice", "🍓❄️ Strawberry Ice", "🍓🍉 Strawberry Watermelon"],
+  },
+  {
+    marca: "IGNITE", modelo: "V-MIX 40K", puffs: "40.000 puffs",
+    feats: ["2 sabores en 1", "Recargable"], color: ["#f43f5e", "#22d3ee"], precio: "$27.000", img: "img/ignite-vmix.webp",
+    sabores: ["🍌🍒🍇❄️ Banana Cherry / Grape Ice", "🍓🍋🍇❄️ Strawberry Lemon Ice / Grape Ice"],
+  },
+  {
+    marca: "EBCREATE", modelo: "BC PRO 40K", puffs: "40.000 puffs",
+    feats: ["Pantalla", "Modo turbo", "Recargable"], color: ["#f43f5e", "#a855f7"], precio: "$17.000", img: "img/ebcreate-bc-pro.webp",
+    sabores: ["🫐✨ Aurora Berries", "🫐❄️ Blue Razz Ice", "🍓✨ Golden Berry", "🍇 Grape Twist", "🍋🩷 Pink Lemonade", "🍓🥝 Strawberry Kiwi", "🍓🫐 Triple Berry", "🍉❄️ Watermelon Ice", "🍉🍑 Watermelon Peach", "🍓❄️ Strawberry Raspberry Frost", "🍬😝 Sour Fcuking Fab"],
+  },
+  {
+    marca: "LIFE POD", modelo: "THE ONE 40K · CARBON BLACK", puffs: "40.000 puffs",
+    feats: ["Control de ice y potencia", "Pantalla"], color: ["#1f2937", "#a855f7"], precio: "$25.000", img: "img/lifepod-the-one.webp",
+    sabores: ["🖤🫐 Blackberry", "🫐 Blueberry", "🫐🫧 Blue Razz Bubble", "🍒🫧 Cherry Bubble", "🍒🍉 Cherry Watermelon", "🍇❄️ Grape Ice", "❤️ Love 66", "🌿❄️ Miami Mint", "⚡🥤 Monster Drink", "🍓🫐 Triple Berry", "🍉🫧 Watermelon Bubble"],
+  },
+  {
+    marca: "BLACK SHEEP", modelo: "CYBER TANK PRO 55K", puffs: "55.000 puffs",
+    feats: ["Doble mesh", "Pantalla", "Recargable"], color: ["#22d3ee", "#f43f5e"], precio: "$26.000", img: "img/black-sheep-ctp.webp",
+    sabores: ["🍇🌿 Aloe Grape", "🫐❄️ Blue Razz Ice", "🫐🍉 Blueberry Watermelon", "🌿❄️ Miami Mint", "🍓🫐 Mixed Berry", "🍇❄️ White Grape Ice"],
+  },
+  {
+    marca: "ELF BAR", modelo: "BC 15K", puffs: "15.000 puffs",
+    feats: ["Indicador de batería", "Recargable"], color: ["#f472b6", "#a855f7"], precio: "$15.000", img: "img/elfbar-bc15000.webp",
+    sabores: ["🍇🍬 Bubbalo Grape", "🫐❄️ Blue Razz Ice", "🫐 Blueberry", "🍓🍉 Strawberry Watermelon", "🍉❄️ Watermelon Ice"],
+  },
+  {
+    marca: "NIKBAR", modelo: "10.000 PUFFS", puffs: "10.000 puffs",
+    feats: ["Recargable"], color: ["#22d3ee", "#22c55e"], precio: "$14.000", img: "img/nikbar-10000.webp",
+    sabores: ["🫐❄️ Blueberry Ice", "🌿❄️ Miami Mint", "🍓❄️ Strawberry Ice", "🍉❄️ Watermelon Ice", "🍓🥝 Strawberry Kiwi"],
+  },
+];
+
+/* ========== a partir de acá no hace falta tocar ========== */
+const waLink = (msg) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function podSVG([a, b], i) {
+  return `<svg viewBox="0 0 120 220" aria-hidden="true">
+    <defs><linearGradient id="g${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>
+    <filter id="f${i}" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="8"/></filter></defs>
+    <rect x="22" y="52" width="76" height="150" rx="30" fill="url(#g${i})" filter="url(#f${i})" opacity=".55"/>
+    <path d="M47 20h26a6 6 0 0 1 6 6v26H41V26a6 6 0 0 1 6-6z" fill="#e9e7f3"/>
+    <rect x="22" y="48" width="76" height="154" rx="30" fill="url(#g${i})"/>
+    <rect x="32" y="62" width="12" height="110" rx="6" fill="#fff" opacity=".28"/>
+    <circle cx="60" cy="182" r="5" fill="#07070a" opacity=".7"/>
+  </svg>`;
+}
+
+const grid = document.getElementById("grid");
+const filters = document.getElementById("filters");
+let marcaActiva = "Todos";
+
+function render() {
+  grid.innerHTML = PRODUCTOS.map((p, i) => ({ p, i }))
+    .filter(({ p }) => marcaActiva === "Todos" || p.marca === marcaActiva)
+    .map(({ p, i }) => {
+      const sabores = p.sabores.map((s) => {
+        const out = /\(agotado\)/i.test(s);
+        const name = s.replace(/\s*\(agotado\)/i, "");
+        return `<button class="fl${out ? " out" : ""}" ${out ? "disabled" : ""} data-f="${esc(name)}">${esc(name)}</button>`;
+      }).join("");
+      const disp = p.sabores.filter((s) => !/\(agotado\)/i.test(s)).length;
+      const tag = disp === 0 ? "Sin stock" : disp > 1 ? `${disp} sabores` : "";
+      return `<article class="card${disp === 0 ? " soldout" : ""}" data-i="${i}">
+        <div class="pic">${p.img ? `<img src="${esc(p.img)}" alt="${esc(p.marca + " " + p.modelo)}" loading="lazy">` : podSVG(p.color, i)}
+          <span class="badge">${esc(p.puffs)}</span>${tag ? `<span class="badge alt">${tag}</span>` : ""}</div>
+        <div class="body">
+          <div><div class="brandname">${esc(p.marca)}</div><div class="name">${esc(p.modelo)}</div></div>
+          <div class="feats">${p.feats.map((f) => `<span class="feat">${esc(f)}</span>`).join("")}</div>
+          <div><div class="flab">Sabores · tocá para elegir</div><div class="flavors">${sabores}</div></div>
+          <div class="price"><div><small>Precio</small><b>${disp === 0 ? "Sin stock" : p.precio ? esc(p.precio) : "Consultar"}</b></div>
+            <a class="btn btn-wa btn-sm buy" target="_blank" rel="noopener"><svg class="wa-ico" viewBox="0 0 24 24"><use href="#wa"/></svg>${disp === 0 ? "Avisarme" : p.precio ? "Pedir" : "Consultar"}</a></div>
+        </div></article>`;
+    }).join("");
+  grid.querySelectorAll(".card").forEach(updateBuy);
+}
+
+function updateBuy(card) {
+  const p = PRODUCTOS[card.dataset.i];
+  const sel = card.querySelector(".fl.sel");
+  const nombre = `${p.marca} ${p.modelo} (${p.puffs})`;
+  const sinStock = card.classList.contains("soldout");
+  const msg = sinStock
+    ? `Hola Pod Hub! ¿Me avisan cuando vuelva a entrar el ${nombre}? 💨`
+    : sel
+    ? `Hola Pod Hub! Quiero el ${nombre} sabor ${sel.dataset.f}${p.precio ? ` (${p.precio})` : ""}. ¿Lo tienen disponible? 💨`
+    : `Hola Pod Hub! Quiero el ${nombre}${p.precio ? ` (${p.precio})` : ""}. ¿Qué sabores tienen disponibles? 💨`;
+  card.querySelector(".buy").href = waLink(msg);
+}
+
+grid.addEventListener("click", (e) => {
+  const b = e.target.closest(".fl");
+  if (!b || b.disabled) return;
+  const card = b.closest(".card");
+  const was = b.classList.contains("sel");
+  card.querySelectorAll(".fl").forEach((x) => x.classList.remove("sel"));
+  if (!was) b.classList.add("sel");
+  updateBuy(card);
+});
+
+const marcas = ["Todos", ...new Set(PRODUCTOS.map((p) => p.marca))];
+filters.innerHTML = marcas.map((m) => `<button class="chip${m === "Todos" ? " on" : ""}" data-m="${esc(m)}">${esc(m)}</button>`).join("");
+filters.addEventListener("click", (e) => {
+  const c = e.target.closest(".chip"); if (!c) return;
+  marcaActiva = c.dataset.m;
+  filters.querySelectorAll(".chip").forEach((x) => x.classList.toggle("on", x === c));
+  render();
+});
+
+document.querySelectorAll("[data-wa]").forEach((a) => (a.href = waLink(a.dataset.wa)));
+// sin link de grupo: el botón pide que lo sumen por WhatsApp
+document.getElementById("group-btn").href = CONFIG.grupo || waLink("Hola Pod Hub! Quiero que me sumen al grupo de clientes 💨");
+
+render();
+
+// aviso +18: arranca oculto y solo se muestra si el JS anda (así nunca traba la página).
+// Se recuerda en este dispositivo.
+const gate = document.getElementById("gate");
+let ok = false;
+try { ok = localStorage.getItem("podhub18") === "1"; } catch (e) {}
+if (!ok) gate.classList.remove("hidden");
+document.getElementById("gate-yes").addEventListener("click", () => {
+  gate.classList.add("hidden");
+  try { localStorage.setItem("podhub18", "1"); } catch (e) {}
+});
+document.getElementById("gate-no").addEventListener("click", () => { location.href = "https://www.google.com"; });
+</script>
+</body>
+</html>
